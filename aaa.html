@@ -3,7 +3,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-
+	<style>
+		.demo {
+			width: 100px;
+		}
+	</style>
 </head>
 <body>
 	<div class="demo aa aa aa" id="demo">
@@ -29,6 +33,8 @@
 		 }else {
 			 alert(4124)
 		 }
+	$('#demo').css({'width': '200px','height':'300px'})
+		//alert($('#demo').css('width', '200'))
 	</script>
 </body>
 </html>

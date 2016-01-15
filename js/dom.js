@@ -52,5 +52,28 @@ yih = (function (obj) {
         return new RegExp(str,'g').test(obj.class()) ? true : false;
     }
 
+    /**
+     * 大名鼎鼎的css方法
+     */
+    obj.css = function (agm1,agm2) {
+        if(agm2) {
+            obj.dom.style[agm1] = agm2;
+        }else if(typeof agm1 == 'object') {
+            for(v in agm1) {
+                obj.dom.style[v] = agm1[v]
+            }
+        }else {
+            if (obj.currentStyle) {
+                return obj.dom.currentStyle[agm1];
+            }
+            else if (window.getComputedStyle) {
+                propprop = agm1.replace (/([A-Z])/g, "-$1");
+                propprop = agm1.toLowerCase ();
+                return document.defaultView.getComputedStyle (obj.dom,null)[agm1];
+            }
+        }
+
+        return this;
+    }
     return obj;
 })(yih);
