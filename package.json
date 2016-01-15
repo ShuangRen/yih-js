@@ -1,0 +1,15 @@
+{
+  "name": "fs.ifaclub.com",
+  "file": "jquery",
+  "version": "",
+  "description": "金融产品后台",
+  "dependencies": "",
+  "hash": "de3a6b04",
+  "license": "MIT",
+  "repository": "http://git.ephah.cf/frontend/mainSite_user.git",
+  "devDependencies": {
+    "gulp" : "*",
+    "gulp-uglify" : "*",
+    "gulp-concat" : "*"
+  }
+}
