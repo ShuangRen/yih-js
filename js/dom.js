@@ -1,5 +1,5 @@
 yih = (function (obj) {
-  if(!yih) {
+  if(!obj) {
     alert('参数错误')
   }
   /**
