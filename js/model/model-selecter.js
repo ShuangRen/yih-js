@@ -27,20 +27,22 @@ var _selecter = (function () {
     },
 
     "classSelect" : function (cls) {
-        this.all == '' ? document.getElementsByTagName('*') : this.all;
+        this.all  =  document.getElementsByTagName('*');
         this.arr = [];
         for(var i=0; i<this.all.length;i++) {
-          if(this.all[i].className = cls) {
+          if(new RegExp(cls, 'g').test(this.all[i].className)) {
             this.arr.push(this.all[i]);
           }
         }
+        if(this.arr.length > 1) {
+            return this.arr;
+        }
 
-        return this.arr;
+        return this.arr[0];
 
     },
 
     "domSelect" : function (tagName) {
-      alert(22)
       return document.getElementsByTagName(tagName);
     }
   };

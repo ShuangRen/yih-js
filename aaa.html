@@ -13,6 +13,9 @@
 	<div class="demo aa aa aa" id="demo">
 
 	</div>
+	<div class="demo aa aa aa" id="demo2">
+
+	</div>
 	<!-- model -->
 	<script type="text/javascript" src="js/model/model-selecter.js"></script>
 	<script type="text/javascript" src="js/model/model-dom.js"></script>
@@ -27,16 +30,16 @@
 	<script type="text/javascript">
 	//console.log($)
 		 //console.log($('#demo').class())
-		 console.log($('#demo').addClass('ccc').removeClass('aa'))
-		 if($('#demo').hasClass('ccc')) {
+		 //console.log($('.demo').addClass('ccc').removeClass('aa'))
+		 if($('.demo').hasClass('ccc')) {
 			 alert(222)
 		 }else {
 			 alert(4124)
 		 }
-	$('#demo').css({'width': '200px','height':'300px'})
+	$('.demo').css({'width': '200px','height':'300px'})
 		//alert($('#demo').css('width', '200'))
 
-		alert($('#demo').attr({'index': 1, 'adddd':2}).attr('add'))
+		alert($('.demo').attr({'index': 1, 'adddd':2}).attr('add'))
 	</script>
 </body>
 </html>

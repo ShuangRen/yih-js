@@ -2,16 +2,16 @@ yih = (function (obj) {
   if(!obj) {
     alert('参数错误')
   }
-  /**
-   * 获取last dom
-   */
-   obj.last = function () {
-     if(obj.dom.length > 1) {
-        renturn obj.dom[(obj.dom.length - 1)];
-     }else {
-       obj.dom;
-     }
-   };
+  var domEach = function (Fn) {
+    if(obj.dom.length > 1) {
+      for(var i=0; i<obj.dom.length; i++) {
+        Fn&&Fn(obj.dom[i]);
+      }
+    }else {
+      Fn(obj.dom)
+    }
+  }
+
 
   /**
    * 获取和重写className
@@ -19,12 +19,17 @@ yih = (function (obj) {
   obj.class= function (agm) {
     //如果有参数 则 重写className
     if(agm) {
-      obj.domEach(obj.dom, function (v) {
+      domEach(function (v) {
         v.className = agm
       });
       return this
     }else { //,没有参数则获取className
-      return obj.last().className;
+      if(obj.dom.length > 1) {
+          return obj.dom[(obj.dom.length - 1)].className;
+      }else {
+        return obj.dom.className;
+      }
+
     }
   };
 
@@ -38,8 +43,9 @@ yih = (function (obj) {
       //如果传入了参数 并且 当前className 不存在此className
       if(str) {
           //添加className
-          obj.domEach(obj.dom, function (v) {
-            if(str && !re_cls.test(obj.class())) {
+          domEach(function (v) {
+
+            if(str && !re_cls.test(v.className)) {
               v.className = v.className + ' ' + str;
             }
           });
@@ -57,7 +63,9 @@ yih = (function (obj) {
       //如果传入了参数 并且 当前className 不存在此className
       if(str) {
           //添加className  并且去掉所有不符合规范的空格
-          obj.dom.className = obj.dom.className.replace(re_cls,'').replace(/(^\s*)|(\s*$)/g,'').replace(/\s{2,}/, ' ');
+          domEach(function (v) {
+              v.className = v.className.replace(re_cls,'').replace(/(^\s*)|(\s*$)/g,'').replace(/\s{2,}/, ' ');
+          });
       }
       return this
   };
@@ -75,21 +83,33 @@ yih = (function (obj) {
   obj.css = function (agm1,agm2) {
     //有第二个参数则必定是设置css
       if(agm2) {
-          obj.dom.style[agm1] = agm2;
+        domEach(function (v) {
+            v.style[agm1] = agm2;
+        });
           //当参数为对象
       }else if(typeof agm1 == 'object') {
           for(v in agm1) {
-              obj.dom.style[v] = agm1[v]
+            domEach(function (v2) {
+                v2.style[v] = agm1[v]
+            });
           }
       }else { //当参数为1个的时候 为 获取css
-          if (obj.currentStyle) {
-              return obj.dom.currentStyle[agm1];
-          }
-          else if (window.getComputedStyle) {
-              // propprop = agm1.replace (/([A-Z])/g, "-$1");
-              // propprop = agm1.toLowerCase ();
-              return document.defaultView.getComputedStyle (obj.dom,null)[agm1];
-          }
+        if(obj.dom.length> 1) {
+          var dom_last= obj.dom[(obj.dom.length- 1)];
+          getDomOneStyle(dom_last);
+
+        }else {
+          getDomOneStyle(obj.dom);
+
+        }
+      }
+      function getDomOneStyle (dome) {
+        if (dome.currentStyle) {
+            return dome.currentStyle[agm1];
+        }
+        else if (window.getComputedStyle) {
+            return document.defaultView.getComputedStyle (dome,null)[agm1];
+        }
       }
 
       return this;
@@ -101,18 +121,26 @@ yih = (function (obj) {
    obj.attr = function (agm1,agm2) {
      //第二个参数存在则为设定属性值
      if(agm2) {
-       obj.dom.setAttribute(agm1, agm2);
+       domEach(function(v) {
+         v.setAttribute(agm1, agm2);
+       });
        //若为对象 则循环设置
      }else if(typeof agm1 == 'object') {
        for(v in agm1) {
-           obj.dom.setAttribute(v, agm1[v]);
+         domEach(function(v2) {
+            v2.setAttribute(v, agm1[v]);
+         });
        }
      }else {
        //当参数为1个则为获取属性
-       return obj.dom.getAttribute(agm1);
+       if(obj.dom.length > 1) {
+          return obj.dom[(obj.dom.length - 1)].getAttribute(agm1);
+       }else {
+         return obj.dom.getAttribute(agm1);
+       }
      }
      return this;
-   }
+   };
 
 
 

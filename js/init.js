@@ -7,21 +7,11 @@ var yih = (function () {
     return this;
   }
 
-  var domEach = function (dom, Fn) {
-    if(dom.length > 1) {
-      for(var i=0; i<dom.length; i++) {
-        Fn&&Fn(dom[i]);
-      }
-    }else {
-      Fn(dom)
-    }
-  }
-
   //返回对应参数
   return {
     "version":1,
     "getDom":getDom,
-    "domEach":domEach
+    //"domEach":domEach
   }
 })()
 
