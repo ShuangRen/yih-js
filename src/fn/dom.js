@@ -178,7 +178,79 @@ yih = (function (obj) {
     * children 方法  找到所有规定的一级子元素
     */
     obj.children = function () {
+      //遍历str
+      switch(str.charAt(0)) {
+        //第一位为# 则是id 选择器
+        case '#':
+          idChildSelect(str.substring(1));
+          break;
+        case '.': //第一位是 .  则是class 选择器
+          classChildSelect();
+          break;
+        default : //默认为tag 选择器
+          tagChildSelect();
+          break;
+      };
 
+      function idChildSelect(idName) {
+        var arr = [];
+        if(obj.dom.length > 1) {
+          domEach(function (dom) {
+            if(dom.children.length > 1) {
+              domEach(function (dom2) {
+                if(dom2.id == idName) {
+                  arr.push(dom2);
+                }
+              },dom.children);
+
+              return arr;
+
+
+            }else {
+              if(dom.children[0].id == idName) {
+                return dom.children[0];
+              }
+            }
+          });
+        }else {
+          if(obj.dom.children.length > 1) {
+            domEach(function (dom2) {
+              if(dom2.id == idName) {
+                arr.push(dom);
+              }
+            },obj.dom.children);
+
+            return arr;
+
+          }else {
+            if(obj.dom.children[0].id == idName) {
+              return obj.dom.children[0];
+            }
+          }
+        }
+      }
+
+      function classChildSelect() {
+        var all  =  obj.dom.getElementsByTagName('*');
+        var arr = [];
+        for(var i=0; i<all.length;i++) {
+          if(new RegExp(str.substring(1), 'g').test(all[i].className)) {
+            this.arr.push(this.all[i]);
+          }
+        }
+        //长度大于1 则直接赋值
+        if(this.arr.length > 1) {
+            obj.dom = this.arr;
+        }else { //否则赋值第0 位
+          obj.dom = this.arr[0];
+        }
+      }
+
+      function classChildSelect() {
+        obj.dom = obj.dom.getElementsByTagName(str.substring(0));
+      }
+
+      return this;
     }
 
   return obj;
