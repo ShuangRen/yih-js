@@ -19,7 +19,7 @@ var concat = require('gulp-concat');  //文件合并
 
 //JS 压缩
 gulp.task('script', function () {
-	gulp.src(['js/model/*.js','js/init.js', 'js/dom.js'])
+	gulp.src(['src/model/*.js','src/init.js', 'src/fn/*.js'])
   .pipe(concat('yih.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('build'));

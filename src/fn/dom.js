@@ -142,7 +142,44 @@ yih = (function (obj) {
      return this;
    };
 
+/**
+ * find  找到所有规定的子元素合集
+ */
+   obj.find = function (str) {
+     //遍历str
+     switch(str.charAt(0)) {
+       //第一位为# 则是id 选择器
+       case '#':
+         obj.dom = obj.dom.getElementById(str.substring(1));
+         break;
+       case '.': //第一位是 .  则是class 选择器
+         var all  =  obj.dom.getElementsByTagName('*');
+         var arr = [];
+         for(var i=0; i<all.length;i++) {
+           if(new RegExp(str.substring(1), 'g').test(all[i].className)) {
+             this.arr.push(this.all[i]);
+           }
+         }
+         //长度大于1 则直接赋值
+         if(this.arr.length > 1) {
+             obj.dom = this.arr;
+         }else { //否则赋值第0 位
+           obj.dom = this.arr[0];
+         }
+         break;
+       default : //默认为tag 选择器
+         obj.dom = obj.dom.getElementsByTagName(str.substring(0));
+         break;
+     };
+     return this;
+   }
 
+   /**
+    * children 方法  找到所有规定的一级子元素
+    */
+    obj.children = function () {
+
+    }
 
   return obj;
 })(yih);
